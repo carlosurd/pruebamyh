@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <img src="images/logo.png" alt="Logo">
+    <title>Calculadora de Litros Vendidos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 130vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .row {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        input[type="number"], input[type="text"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #003366;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333333;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #cc0000;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #990000;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #003366;
+            color: #ffffff;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .history {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            color: #333333;
+        }
+
+        .history h2 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #003366;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #dddddd;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Calculadora de Litros Vendidos</h1>
+    </header>
+
+    <div class="content">
+        <!-- Información del turno y del operador -->
+        <div class="row">
+            <label for="turno">Selecciona el turno:</label>
+            <select id="turno">
+                <option value="Mañana">Mañana</option>
+                <option value="Tarde">Tarde</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="operador">Nombre del operador:</label>
+            <input type="text" id="operador" placeholder="Ingresa el nombre del operador">
+        </div>
+
+        <!-- Primer surtidor -->
+        <div class="row">
+            <label for="machine1">Selecciona la máquina (Surtidor 1):</label>
+            <select id="machine1">
+                <option value="93">93</option>
+                <option value="95">95</option>
+                <option value="diesel">Diesel</option>
+                <option value="kerosene">Kerosene</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="price1">Precio por litro (en $) (Surtidor 1):</label>
+            <input type="number" id="price1" step="0.01" min="0" placeholder="Ingresa el precio por litro">
+        </div>
+        <div class="row" id="surtidor1_1">
+            <label for="numeral1_1">Numeral del surtidor 1 (Surtidor 1):</label>
+            <input type="number" id="numeral1_1" min="0" placeholder="Ingresa el numeral inicial">
+            <input type="number" id="numeral1_2" min="0" placeholder="Ingresa el numeral final">
+        </div>
+        <div class="row" id="surtidor1_2" style="display: none;">
+            <label for="numeral1_3">Numeral del surtidor 2 (Surtidor 1):</label>
+            <input type="number" id="numeral1_3" min="0" placeholder="Ingresa el numeral inicial">
+            <input type="number" id="numeral1_4" min="0" placeholder="Ingresa el numeral final">
+        </div>
+
+        <!-- Segundo surtidor -->
+        <div class="row">
+            <label for="machine2">Selecciona la máquina (Surtidor 2):</label>
+            <select id="machine2">
+                <option value="93">93</option>
+                <option value="95">95</option>
+                <option value="diesel">Diesel</option>
+                <option value="kerosene">Kerosene</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="price2">Precio por litro (en $) (Surtidor 2):</label>
+            <input type="number" id="price2" step="0.01" min="0" placeholder="Ingresa el precio por litro">
+        </div>
+        <div class="row" id="surtidor2_1">
+            <label for="numeral2_1">Numeral del surtidor 1 (Surtidor 2):</label>
+            <input type="number" id="numeral2_1" min="0" placeholder="Ingresa el numeral inicial">
+            <input type="number" id="numeral2_2" min="0" placeholder="Ingresa el numeral final">
+        </div>
+        <div class="row" id="surtidor2_2" style="display: none;">
+            <label for="numeral2_3">Numeral del surtidor 2 (Surtidor 2):</label>
+            <input type="number" id="numeral2_3" min="0" placeholder="Ingresa el numeral inicial">
+            <input type="number" id="numeral2_4" min="0" placeholder="Ingresa el numeral final">
+        </div>
+
+        <button onclick="calcular()">Calcular Litros Vendidos</button>
+        <div class="result" id="result"></div>
+
+        <div class="history" id="history">
+            <h2>Historial de Cálculos</h2>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('machine1').addEventListener('change', function() {
+        toggleSurtidores(this.value, 'surtidor1_2');
+    });
+
+    document.getElementById('machine2').addEventListener('change', function() {
+        toggleSurtidores(this.value, 'surtidor2_2');
+    });
+
+    function toggleSurtidores(machine, surtidorDivId) {
+        if (machine === 'kerosene') {
+            document.getElementById(surtidorDivId).style.display = 'none';
+        } else {
+            document.getElementById(surtidorDivId).style.display = 'block';
+        }
+    }
+
+    function calcular() {
+        let historyDiv = document.getElementById('history');
+        let resultDiv = document.getElementById('result');
+
+        let turno = document.getElementById('turno').value;
+        let operador = document.getElementById('operador').value;
+
+        // Calculo del primer surtidor
+        let machine1 = document.getElementById('machine1').value;
+        let price1 = parseFloat(document.getElementById('price1').value) || 0;
+        let litrosVendidos1 = calcularLitrosVendidos(machine1, 'numeral1_1', 'numeral1_2', 'numeral1_3', 'numeral1_4');
+        let total1 = litrosVendidos1 * price1;
+
+        // Calculo del segundo surtidor
+        let machine2 = document.getElementById('machine2').value;
+        let price2 = parseFloat(document.getElementById('price2').value) || 0;
+        let litrosVendidos2 = calcularLitrosVendidos(machine2, 'numeral2_1', 'numeral2_2', 'numeral2_3', 'numeral2_4');
+        let total2 = litrosVendidos2 * price2;
+
+        // Mostrar resultados
+        resultDiv.innerHTML = 
+            `Operador: ${operador} (${turno})<br>` +
+            `Surtidor 1 (${machine1}) - Litros Vendidos: ${litrosVendidos1.toFixed(2)}, Precio Total: $${total1.toFixed(2)}<br>` +
+            `Surtidor 2 (${machine2}) - Litros Vendidos: ${litrosVendidos2.toFixed(2)}, Precio Total: $${total2.toFixed(2)}`;
+
+        // Guardar historial
+        historyDiv.innerHTML += 
+            `<div class="history-item">Operador: ${operador} (${turno})<br>` +
+            `Surtidor 1 (${machine1}) - Litros Vendidos: ${litrosVendidos1.toFixed(2)}, Precio Total: $${total1.toFixed(2)}</div>` +
+            `<div class="history-item">Surtidor 2 (${machine2}) - Litros Vendidos: ${litrosVendidos2.toFixed(2)}, Precio Total: $${total2.toFixed(2)}</div>`;
+    }
+
+    function calcularLitrosVendidos(machine, numeral1Id, numeral2Id, numeral3Id, numeral4Id) {
+        let litrosVendidos = 0;
+
+        let numeral1 = parseFloat(document.getElementById(numeral1Id).value) || 0;
+        let numeral2 = parseFloat(document.getElementById(numeral2Id).value) || 0;
+        litrosVendidos += numeral2 - numeral1;
+
+        if (machine !== 'kerosene') {
+            let numeral3 = parseFloat(document.getElementById(numeral3Id).value) || 0;
+            let numeral4 = parseFloat(document.getElementById(numeral4Id).value) || 0;
+            litrosVendidos += numeral4 - numeral3;
+        }
+
+        return litrosVendidos;
+    }
+</script>
+
+</body>
+</html>
